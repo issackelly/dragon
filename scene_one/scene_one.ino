@@ -53,15 +53,16 @@ const int16_t BODY_STARTS = 25;
 void loop() {
 
   updateEyes(j);
+  updateHead(j);
   update(j);
   strip.show();
 
   if(j_direction == 1){
     if(j > 80) j_direction = 0;
-    else j += 4;
+    else j += 1;
   } else {
     if(j < 2) j_direction = 1;
-    j -= 4;
+    j -= 1;
   }
 
   random_jump = random(10);
@@ -75,42 +76,36 @@ void loop() {
   }
 
   
-  delay(190);
+  delay(20);
 }
 
 void updateEyes(int16_t j){
 
-  // right eye
-  strip.setPixelColor(0, strip.Color(255, 255, 255);
-  strip.setPixelColor(1, strip.Color(255, 255, 255);
-  strip.setPixelColor(2, strip.Color(255, 255, 255);
-  strip.setPixelColor(3, strip.Color(255, 255, 255);
-  strip.setPixelColor(4, strip.Color(255, 255, 255);
-
-  // left eye
-  strip.setPixelColor(10, strip.Color(255, 255, 255);
-  strip.setPixelColor(11, strip.Color(255, 255, 255);
-  strip.setPixelColor(12, strip.Color(255, 255, 255);
-  strip.setPixelColor(13, strip.Color(255, 255, 255);
-  strip.setPixelColor(14, strip.Color(255, 255, 255);
-
+  if (j < 25 && j >= 0){
+    for(uint8_t i=0; i < 5; i++) {
+      strip.setPixelColor(i, strip.Color(45-j, 255-(j * 4), 55-j));
+      strip.setPixelColor(i+9, strip.Color(45-j, 255-(j * 4), 55-j));
+    } 
+  }
+  else {
+    // right eye
+    for(uint8_t i=0; i < 5; i++) {
+      strip.setPixelColor(i, strip.Color(55, 255, 55));
+      strip.setPixelColor(i+9, strip.Color(55, 255, 55));
+    } 
+  }
+  
 }
 
 void updateHead(int16_t j){
-  for(i=EYES_END; i< BODY_STARTS; i++) {
-    if(i % 3 == 0) {
-      strip.setPixelColor(i, strip.Color(90 + j, 25+j, 5));    }
-    if(i % 3 == 1) {
-      strip.setPixelColor(i, strip.Color(120 + j, 50+j, 0));
+  for(uint16_t i=EYES_END; i< BODY_STARTS; i++) {
+    if(i % 2 == 0) {
+      strip.setPixelColor(i, strip.Color(90 + j, 0, 170 + j));
     }
-    if(i % 3 == 2) {
-      strip.setPixelColor(i, strip.Color(140 + j, 0, 0));    }
+    else {
+      strip.setPixelColor(i, strip.Color(40+j, 0, 150+j));
+    }
     
-    if(i % 28 == 0) {
-      //if ((i + firefly_offset) > strip.numPixels()) random_jump++;
-      //else 
-      strip.setPixelColor(i + firefly_offset, strip.Color(30-j, 80, 30));
-    }
     
   }
 }
@@ -120,7 +115,7 @@ void update(int16_t j) {
 
   for(i=BODY_STARTS; i< strip.numPixels(); i++) {
     if((i == firefly1) || (i == firefly2) || (i == firefly3)){
-      strip.setPixelColor(i + firefly_offset, strip.Color(30-j, 80, 30));
+      strip.setPixelColor(i + firefly_offset, strip.Color(30-j, 100, 30));
     }
     if(i % 2 == 0) {
       strip.setPixelColor(i, strip.Color(90 + j, 0, 170 + j));
